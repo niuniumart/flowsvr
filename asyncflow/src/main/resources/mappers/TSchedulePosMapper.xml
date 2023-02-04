@@ -15,11 +15,6 @@
             <result property="modifyTime" column="modify_time" jdbcType="BIGINT"/>
     </resultMap>
 
-    <sql id="Base_Column_List">
-        id,task_type,data_begin_pos,
-        data_end_pos,schedule_begin_pos,schedule_end_pos,
-        create_time,modify_time
-    </sql>
     <insert id="save"
             parameterType="com.zdf.asyncflow.data.AsyncFlowTask"
             useGeneratedKeys="true" keyProperty="id">

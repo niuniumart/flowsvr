@@ -1,5 +1,8 @@
 package com.zdf.asyncflow.util;
 
+/**
+ * 雪花算法，用于生成任务ID
+ */
 class SnowFlake {
 
 

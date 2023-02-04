@@ -76,9 +76,9 @@ namespace: 命名空间，用于标识每一个Mapper XML文件中的语句，�
         update
             t_lark_task_1
         set
-            status = #{status}
+            status = #{newStatus}
         where
-            status = 1
+            status = #{oldStatus}
         and
             modify_time + #{maxProcessingTime} &lt; #{currentTime};
     </update>
@@ -120,7 +120,7 @@ namespace: 命名空间，用于标识每一个Mapper XML文件中的语句，�
             task_id = #{task_id}
     </select>
     <select id="getTaskCount" resultType="java.lang.Integer">
-        select * from t_lark_task_1
+        select count(*) from t_lark_task_1
         where
             status in
         <foreach collection="statusList" item="status" index="index"
@@ -164,7 +164,6 @@ namespace: 命名空间，用于标识每一个Mapper XML文件中的语句，�
                 max_retry_interval = #{max_retry_interval},
                 schedule_log = #{schedule_log},
                 task_context = #{task_context},
-                create_time = #{create_time},
                 modify_time = #{modify_time}
             where id = #{id}
         </if>

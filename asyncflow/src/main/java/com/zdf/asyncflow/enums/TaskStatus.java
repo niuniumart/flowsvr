@@ -1,13 +1,14 @@
 package com.zdf.asyncflow.enums;
 
-import java.util.LinkedList;
-import java.util.List;
 
+/**
+ * 任务状态
+ */
 public enum TaskStatus {
-    PENDING(0),
-    EXECUTING(1),
-    SUCCESS(2),
-    FAIL(3);
+    PENDING(1),
+    EXECUTING(2),
+    SUCCESS(3),
+    FAIL(4);
 
     private TaskStatus(int status) {
         this.status = status;

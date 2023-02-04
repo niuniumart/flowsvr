@@ -4,6 +4,9 @@ import com.zdf.asyncflow.data.ReturnStatus;
 import com.zdf.asyncflow.enums.ErrorStatus;
 import com.zdf.asyncflow.enums.TaskStatus;
 
+/**
+ * 错误任务状态
+ */
 public class ErrorStatusReturn {
     public static ReturnStatus SUCCESS = new ReturnStatus(ErrorStatus.SUCCESS);
     public static ReturnStatus ERR_INPUT_INVALID = new ReturnStatus(ErrorStatus.ERR_INPUT_INVALID);
@@ -22,9 +25,11 @@ public class ErrorStatusReturn {
     public static ReturnStatus ERR_GET_TASK_CFG_FROM_DB = new ReturnStatus(ErrorStatus.ERR_GET_TASK_CFG_FROM_DB);
 
     public static boolean IsValidStatus(int status) {
-        return  status == TaskStatus.PENDING.getStatus() ||
-                status == TaskStatus.EXECUTING.getStatus() ||
-                status == TaskStatus.SUCCESS.getStatus() ||
-                status == TaskStatus.FAIL.getStatus();
+        for (TaskStatus taskStatus : TaskStatus.values()) {
+            if (status == taskStatus.getStatus()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

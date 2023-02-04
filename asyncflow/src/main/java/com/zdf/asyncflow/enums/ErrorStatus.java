@@ -1,6 +1,8 @@
 package com.zdf.asyncflow.enums;
 
-
+/**
+ * 错误状态和信息
+ */
 public enum ErrorStatus {
     SUCCESS(0, "ok"),
     ERR_INPUT_INVALID(8020, "input invalid"),
