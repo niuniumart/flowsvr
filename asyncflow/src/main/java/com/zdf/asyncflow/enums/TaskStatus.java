@@ -5,10 +5,10 @@ package com.zdf.asyncflow.enums;
  * 任务状态
  */
 public enum TaskStatus {
-    PENDING(1),
-    EXECUTING(2),
-    SUCCESS(3),
-    FAIL(4);
+    PENDING(0x01),
+    EXECUTING(0x02),
+    SUCCESS(0x04),
+    FAIL(0x08);
 
     private TaskStatus(int status) {
         this.status = status;

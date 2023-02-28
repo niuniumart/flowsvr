@@ -10,6 +10,14 @@ public class Utils {
         return SnowFlake.nextId();
     }
 
+    public static boolean isStrNull(String s) {
+        return "".equals(s);
+    }
+
+    public static boolean isLongNull(Long l) {
+        return l == null;
+    }
+
 
 
 

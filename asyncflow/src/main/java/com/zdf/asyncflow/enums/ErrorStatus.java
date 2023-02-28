@@ -18,7 +18,8 @@ public enum ErrorStatus {
     ERR_GET_TASK_POS(8042, "get task pos failed"),
     ERR_GET_PROCESSING_COUNT(8043, "get processing count failed"),
     ERR_SET_USER_PRIORITY(8045, "set user priority failed"),
-    ERR_GET_TASK_CFG_FROM_DB(8039, "get task cfg failed");
+    ERR_GET_TASK_CFG_FROM_DB(8046, "get task cfg failed"),
+    ERR_SET_TASK_CFG_FROM_DB(8047, "set task cfg failed");
 
     private int errCode;
     private String msg;

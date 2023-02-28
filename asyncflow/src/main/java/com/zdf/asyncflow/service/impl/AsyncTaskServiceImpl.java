@@ -110,7 +110,6 @@ public class AsyncTaskServiceImpl implements AsyncTaskService {
 //            return ErrorStatusReturn.ERR_GET_TASK_SET_POS_FROM_DB;
 //        }
         List<AsyncFlowTask> taskList;
-        List<AsyncTaskReturn> taskReturns = new ArrayList<>();
         try {
              taskList = asyncFlowTaskDao.getTaskList(taskType, status, limit);
 
@@ -118,11 +117,17 @@ public class AsyncTaskServiceImpl implements AsyncTaskService {
             logger.error(ErrorStatus.ERR_GET_TASK_LIST_FROM_DB.getMsg());
             return ErrorStatusReturn.ERR_GET_TASK_LIST_FROM_DB;
         }
+        List<AsyncTaskReturn> taskReturns = getTaskReturns(taskList);
+        TaskList list = new TaskList(taskReturns);
+        return new ReturnStatus(list);
+    }
+
+    private List<AsyncTaskReturn> getTaskReturns(List<AsyncFlowTask> taskList) {
+        List<AsyncTaskReturn> taskReturns = new ArrayList<>();
         for (AsyncFlowTask asyncFlowTask : taskList) {
             taskReturns.add(getTaskReturn(asyncFlowTask));
         }
-        TaskList list = new TaskList(taskReturns);
-        return new ReturnStatus(list);
+        return taskReturns;
     }
 
     private AsyncTaskReturn getTaskReturn(AsyncFlowTask asyncFlowTask) {
@@ -215,6 +220,32 @@ public class AsyncTaskServiceImpl implements AsyncTaskService {
         TaskByTaskIdReturn<AsyncTaskReturn> taskByTaskIdReturn = new TaskByTaskIdReturn(getTaskReturn(asyncFlowTask));
         return new ReturnStatus(taskByTaskIdReturn);
     }
+
+    @Override
+    public <T> ReturnStatus<T> getTaskByUserIdAndStatus(String user_id, int statusList) {
+
+        List<AsyncFlowTask> asyncFlowTaskList;
+        try {
+            asyncFlowTaskList = asyncFlowTaskDao.getTaskByUser_idAndStatus(user_id, getStatusList(statusList));
+        } catch (Exception e) {
+            logger.error("get task info error");
+            return ErrorStatusReturn.ERR_GET_TASK_INFO;
+        }
+        List<AsyncTaskReturn> taskReturns = getTaskReturns(asyncFlowTaskList);
+        TaskList list = new TaskList(taskReturns);
+        return new ReturnStatus(list);
+    }
+
+    private List<Integer> getStatusList(int status) {
+        List<Integer> statusList = new ArrayList<>();
+        while (status != 0) {
+            int cur = status & -status;
+            statusList.add(cur);
+            status ^= cur;
+        }
+        return statusList;
+    }
+
 
     private List<AsyncTaskReturn> getAsyncTaskReturns(List<AsyncFlowTask> taskList) {
         return getTaskReturnList(taskList);

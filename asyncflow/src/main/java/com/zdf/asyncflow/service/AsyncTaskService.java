@@ -4,6 +4,9 @@ package com.zdf.asyncflow.service;
 import com.zdf.asyncflow.data.AsyncTaskRequest;
 import com.zdf.asyncflow.data.AsyncTaskSetRequest;
 import com.zdf.asyncflow.data.ReturnStatus;
+import com.zdf.asyncflow.data.UserTaskListRequest;
+
+import java.util.List;
 
 public interface AsyncTaskService {
     /**
@@ -39,4 +42,12 @@ public interface AsyncTaskService {
      * @return
      */
     <T> ReturnStatus<T> getTask(Long task_id);
+
+    /**
+     * 获取指定用户的任务列表
+     * @param task_id
+     * @param <T>
+     * @return
+     */
+    <T> ReturnStatus<T> getTaskByUserIdAndStatus(String user_id, int statusList);
 }

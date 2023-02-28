@@ -33,4 +33,17 @@ public class ScheduleConfigServiceImpl implements ScheduleConfigService {
         ConfigReturn configReturn = new ConfigReturn(taskTypeCfgList);
         return new ReturnStatus(configReturn);
     }
+
+    @Override
+    public <T> ReturnStatus<T> save(ScheduleConfig scheduleConfig) {
+        long currentTimeMillis = System.currentTimeMillis();
+        scheduleConfig.setCreate_time(currentTimeMillis);
+        scheduleConfig.setModify_time(currentTimeMillis);
+        try {
+            scheduleConfigDao.save(scheduleConfig);
+        } catch (Exception e) {
+            logger.error(ErrorStatus.ERR_SET_TASK_CFG_FROM_DB.getMsg());
+        }
+        return ErrorStatusReturn.SUCCESS;
+    }
 }

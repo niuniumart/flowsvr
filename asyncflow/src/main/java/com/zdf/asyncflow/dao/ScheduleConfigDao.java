@@ -15,7 +15,7 @@ public interface ScheduleConfigDao {
     ScheduleConfig getTaskTypeCfg(String task_type);
 
     /**
-     * 新增或修改任务配置
+     * 新增
      * @param scheduleConfig
      */
     void save(ScheduleConfig scheduleConfig);

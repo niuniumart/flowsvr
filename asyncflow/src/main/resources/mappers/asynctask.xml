@@ -128,6 +128,17 @@ namespace: 命名空间，用于标识每一个Mapper XML文件中的语句，�
             #{status}
         </foreach>
     </select>
+    <select id="getTaskByUser_idAndStatus" resultType="com.zdf.asyncflow.data.AsyncFlowTask">
+        select * from t_lark_task_1
+        where
+              user_id = #{user_id}
+        and
+        status in
+        <foreach collection="statusList" item="status" index="index"
+                 open="(" close=")" separator=",">
+            #{status}
+        </foreach>
+    </select>
 
 
     <insert id="create"

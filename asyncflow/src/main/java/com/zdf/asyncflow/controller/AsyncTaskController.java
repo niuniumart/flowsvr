@@ -4,11 +4,15 @@ import com.zdf.asyncflow.constant.ErrorStatusReturn;
 import com.zdf.asyncflow.data.AsyncTaskRequest;
 import com.zdf.asyncflow.data.AsyncTaskSetRequest;
 import com.zdf.asyncflow.data.ReturnStatus;
+import com.zdf.asyncflow.data.UserTaskListRequest;
 import com.zdf.asyncflow.service.AsyncTaskService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import static com.zdf.asyncflow.util.Utils.isLongNull;
+import static com.zdf.asyncflow.util.Utils.isStrNull;
 
 @RestController
 @RequestMapping("/task")
@@ -20,7 +24,7 @@ public class AsyncTaskController {
 
     @PostMapping("/create_task")
     public ReturnStatus createTask(@RequestBody AsyncTaskRequest asyncTaskGroup) {
-        if ("".equals(asyncTaskGroup.getTaskData().getTask_type())){
+        if (isStrNull(asyncTaskGroup.getTaskData().getTask_type())){
             logger.error("input invalid");
             return ErrorStatusReturn.ERR_INPUT_INVALID;
         }
@@ -29,7 +33,7 @@ public class AsyncTaskController {
 
     @GetMapping("/get_task")
     public ReturnStatus getTask(@RequestParam("task_id") Long task_id) {
-        if (task_id == null){
+        if (isLongNull(task_id)){
             logger.error("input invalid");
             return ErrorStatusReturn.ERR_INPUT_INVALID;
         }
@@ -38,7 +42,7 @@ public class AsyncTaskController {
 
     @GetMapping("/task_list")
     public ReturnStatus getTaskList(@RequestParam("task_type") String taskType, @RequestParam("status") int status, @RequestParam("limit") int limit) {
-        if ("".equals(taskType) || !ErrorStatusReturn.IsValidStatus(status)) {
+        if (isStrNull(taskType) || !ErrorStatusReturn.IsValidStatus(status)) {
             logger.error("input invalid");
             return ErrorStatusReturn.ERR_INPUT_INVALID;
         }
@@ -49,11 +53,20 @@ public class AsyncTaskController {
 
     @PostMapping("/set_task")
     public ReturnStatus addTask(@RequestBody AsyncTaskSetRequest asyncTaskSetRequest) {
-        if ("".equals(asyncTaskSetRequest.getTask_id())) {
+        if (isLongNull(asyncTaskSetRequest.getTask_id())) {
             logger.error("input invalid");
             return ErrorStatusReturn.ERR_INPUT_INVALID;
         }
         return asyncTaskService.setTask(asyncTaskSetRequest);
+    }
+
+    @GetMapping("/user_task_list")
+    public ReturnStatus getUserTaskList(@RequestParam("user_id") String user_id, @RequestParam("status_list") int statusList) {
+        if (isStrNull(user_id)) {
+            logger.error("input invalid");
+            return ErrorStatusReturn.ERR_INPUT_INVALID;
+        }
+        return asyncTaskService.getTaskByUserIdAndStatus(user_id, statusList);
     }
 
 }

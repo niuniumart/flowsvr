@@ -101,4 +101,12 @@ public interface AsyncFlowTaskDao {
      * @param newStatus
      */
     void modifyTimeoutPending(Long currentTime, Long maxProcessingTime, int oldStatus, int newStatus);
+
+    /**
+     * 查看指定用户的任务
+     * @param user_id
+     * @param statusList
+     * @return
+     */
+    List<AsyncFlowTask> getTaskByUser_idAndStatus(String user_id, List<Integer> statusList);
 }
